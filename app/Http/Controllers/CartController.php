@@ -36,6 +36,8 @@ class CartController extends Controller
         return back();
     }
 
+//oqfbjqeemuexkgmm
+
     public function createOrder()
     {
         if ($this->cartService->isEmpty()) {
