@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderCreatedMail;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Services\CartService;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -36,7 +38,7 @@ class CartController extends Controller
         return back();
     }
 
-//oqfbjqeemuexkgmm
+
 
     public function createOrder()
     {
@@ -58,6 +60,8 @@ class CartController extends Controller
 
         $this->cartService->clear();
 
+        Mail::to('creatif01@yandex.ru')->send(new OrderCreatedMail($order));
+        //oqfbjqeemuexkgmm
         return redirect()->route('page.home')->with('message', 'Order has been created');
     }
 }

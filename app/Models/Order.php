@@ -15,7 +15,15 @@ class Order extends Model
         'status'
     ];
 
-    public function user() {
+    // Получение всех продуктов из заказа
+    public function products()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    // Получение пользователя из заказа
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

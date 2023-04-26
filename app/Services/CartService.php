@@ -49,11 +49,10 @@ class CartService implements CartInterface
      */
     public function clear(): void
     {
-       session('cart', []);
-       session()->regenerate();
-       session()->invalidate();
+//       session('cart', []);
+//       session()->invalidate();
 
-//        session()->pull('cart', []);
+        session()->pull('cart', []);
 
     }
 
