@@ -24,16 +24,18 @@ class AuthController extends Controller
     public function loginUser(LoginRequest $request)
     {
         $validated = $request->validated();
-        if(auth()->attempt($validated)) {
+        if (auth()->attempt($validated)) {
             return redirect()->route('page.home');
         }
 
         return back()->withErrors(['invalid' => 'Неверный логин или пароль']);
     }
 
-    public function logoutUser(LoginRequest $request)
+    public function logoutUser()
     {
         auth()->logout();
+        session()->invalidate();
+        session()->regenerate();
         return redirect()->route('page.home');
     }
 }

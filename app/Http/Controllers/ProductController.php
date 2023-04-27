@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\CreateRequest;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\Request;
@@ -26,9 +27,22 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['is_published'] = (bool)$request->get('is_published');
+
+        if($request->hasFile('image_path')) {
+            $validated['image_path'] = $request->file('image_path')->store('public/images');
+        }
+
+        $product = Product::query()->create($validated);
+
+        return redirect()->route('admin.index')->with(['message' => "Product \"$product->name\" has been created"]);
+
+
+
     }
 
     /**

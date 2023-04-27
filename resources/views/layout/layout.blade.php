@@ -11,9 +11,16 @@
 </head>
 <body>
 <main>
-        @include('components.header')
-        @yield('content')
-        @include('components.footer')
+    @include('components.header')
+    <div class="container">
+        @if(session()->has('message'))
+            <div class="alert alert-info">
+                <p>{{ session()->get('message') }}</p>
+            </div>
+        @endif
+    </div>
+    @yield('content')
+    @include('components.footer')
 </main>
 </body>
 </html>
