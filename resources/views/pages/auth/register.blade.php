@@ -3,6 +3,7 @@
 @section('page_title', 'Регистрация')
 
 @section('content')
+    <div class="container">
     <section>
         @include('components.errors')
     </section>
@@ -23,4 +24,5 @@
 
        <button type="submit">Регистрация</button>
     </form>
+    </div>
 @endsection

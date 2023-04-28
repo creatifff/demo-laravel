@@ -41,10 +41,11 @@ Route::group([
         'middleware' => ['auth', AdminMiddleware::class]
     ], function () {
         Route::post('/create', 'store')->name('store');
+        Route::post('/update/{product:id}', 'update')->name('update')->where('id', '[0-9]*');
     });
 
     Route::get('/{id}/addToCart', 'addToCart')->name('addToCart')->where('id', '[0-9]*');
-
+    Route::get('/{product:id}', 'show')->name('show')->where('id', '[0-9]*');
 });
 
 Route::group([
@@ -77,6 +78,8 @@ Route::group([
 
     // Страница с формой добавления товара
     Route::get('/product/create', 'createProduct')->name('createProduct');
+    //
+    Route::get('/product/{product:id}/update', 'updateProduct')->name('updateProduct');
 });
 
 Route::group([

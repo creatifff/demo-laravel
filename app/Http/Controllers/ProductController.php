@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\CreateRequest;
+use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\Request;
@@ -50,15 +51,27 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('pages.product', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateRequest $request, Product $product)
     {
-        //
+        $validated = $request->validated();
+
+        if($request->hasFile('image_path')) {
+            $validated['image_path'] = $request
+                ->file('image_path')
+                ->store('public/images');
+        }
+
+        $product->update($validated);
+
+        return redirect()
+            ->route('product.show', $product)
+            ->with(['message' => 'Product has been successfully updated']);
     }
 
     /**

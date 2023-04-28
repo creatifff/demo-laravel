@@ -27,4 +27,15 @@ class AdminController extends Controller
 
         return view('pages.admin.product.create', compact('collections'));
     }
+
+    public function updateProduct(Product $product)
+    {
+        if(is_null($product)) {
+            return back()->with(['message' => 'Данного товара не существует']);
+        }
+
+        $collections = Collection::all();
+
+        return view('pages.admin.product.update', compact('collections', 'product'));
+    }
 }
