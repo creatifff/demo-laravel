@@ -65,6 +65,9 @@ Route::group([
 ], function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'createOrder')->middleware('auth')->name('createOrder');
+
+    Route::post('/create/order', 'store')->middleware('auth')->name('store');
+
     Route::get('/{product:id}/remove', 'remove')->name('remove');
 });
 

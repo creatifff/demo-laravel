@@ -12,7 +12,7 @@
 
             <h1 class="section__title">Cart - {{ $cart->getTotal() }}</h1>
 
-                <a href="{{ route('cart.createOrder') }}">Сделать заказ</a>
+            <a href="{{ route('cart.createOrder') }}">Сделать заказ</a>
 
             @if($cart->isEmpty())
                 <h2>empty cart</h2>
@@ -29,6 +29,19 @@
                         </div>
                     @endforeach
                 </div>
+
+                <div class="cart-total">
+                    <h3>Total: {{ $cart->getTotal() }}</h3>
+
+                    <form id="js-checkout">
+                        @csrf
+                        <label>
+                            <input type="password" name="password" placeholder="Введите пароль">
+                        </label>
+                        <button class="button">Checkout</button>
+                    </form>
+                </div>
+
             @endif
         </div>
     </section>
