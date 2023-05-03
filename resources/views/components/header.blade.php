@@ -1,5 +1,8 @@
-<header>
-    <div class="container">
+<div class="container">
+    <header>
+        <div>
+            <h1>NivaStore</h1>
+        </div>
         <nav>
             <a href="{{ route('page.home') }}">Home</a>
             <a href="{{ route('page.allProducts') }}">Products</a>
@@ -14,5 +17,5 @@
                 <a href="{{ route('auth.logoutUser') }}">Log Out</a>
             @endauth
         </nav>
-    </div>
-</header>
+    </header>
+</div>

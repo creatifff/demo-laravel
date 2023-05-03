@@ -21,6 +21,10 @@
     </div>
     @yield('content')
     @include('components.footer')
+
+    <div id="notifications">
+
+    </div>
 </main>
 </body>
 </html>

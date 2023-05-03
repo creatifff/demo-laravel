@@ -18,7 +18,13 @@ class AuthController extends Controller
 
         auth()->login($user);
 
-        return redirect()->route('page.home');
+        return response()->json([
+           'status' => true,
+           'message' => 'Успешно зарегистрировались',
+           'redirect_url' => route('page.home')
+        ]);
+
+//        return redirect()->route('page.home');
     }
 
     public function loginUser(LoginRequest $request)

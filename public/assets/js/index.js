@@ -41,6 +41,37 @@ const Request = {
   }
 };
 
+const Notifications = {
+    parent: document.getElementById('notifications'),
+    _create(title, text) {
+        const body = document.createElement('div');
+        const titleEl = document.createElement('h4');
+        const textEl = document.createElement('p');
+
+        body.classList.add('notification');
+
+        titleEl.textContent = title;
+        textEl.textContent = text;
+
+        body.append(titleEl);
+        body.append(textEl);
+
+        return body;
+    },
+
+    show(title, text) {
+        const notification = this._create(title, text);
+
+        this.parent.append(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+
+};
+
 const createOrder = (formEl) => {
     const button = formEl.querySelector('button');
 
@@ -87,6 +118,49 @@ const cart = (container) => {
 
 }
 
+// prepare URL
+const pUrl = (url) => {
+    return url.replace(API_URL, '');
+}
+
+
+const createUser = (container) => {
+    const url = container.getAttribute('action');
+
+    const button = container.querySelector('button');
+
+    const callback = () => {
+        Request.post(pUrl(url), makeFormData(container))
+            .then((r) => r.json())
+            .then((data) => {
+                if(data.errors) {
+                    const values = Object.values(data.errors);
+
+                    for (const value of values) {
+                        Notifications.show('Ошибка регистрации', value.pop());
+                    }
+
+                }
+
+                if(data.status) {
+                    alert(`${data.message} Вы будете перенаправлены через 3 секунды!`);
+
+                    setTimeout(() => window.location.href = data.redirect_url, 3000);
+                }
+            });
+    }
+
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        callback();
+    })
+
+    container.addEventListener('submit', (e) => {
+        e.preventDefault();
+        callback();
+    })
+}
+
 const init = () => {
 
     const checkoutFormEl = document.getElementById('js-checkout');
@@ -99,6 +173,12 @@ const init = () => {
 
     if(cartElement) {
         cart(cartElement);
+    }
+
+    const createUserFormElement = document.getElementById('create-user-form');
+
+    if(createUserFormElement) {
+        createUser(createUserFormElement);
     }
 }
 

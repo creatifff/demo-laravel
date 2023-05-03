@@ -7,7 +7,7 @@
     <section>
         @include('components.errors')
     </section>
-    <form action="{{ route('auth.createUser') }}" method="post">
+    <form id="create-user-form" action="{{ route('auth.createUser') }}" method="post">
         @csrf
         <input type="text" name="name" placeholder="Имя">
         <input type="text" name="surname" placeholder="Фамилия">
